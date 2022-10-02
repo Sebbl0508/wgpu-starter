@@ -169,6 +169,14 @@ dependencies = [
 ]
 
 [[package]]
+name = "camera"
+version = "0.1.0"
+dependencies = [
+ "bytemuck",
+ "cgmath",
+]
+
+[[package]]
 name = "cc"
 version = "1.0.73"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -894,6 +902,26 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "abb12e687cfb44aa40f41fc3978ef76448f9b6038cad6aef4259d3c095a2382e"
 dependencies = [
  "cfg-if",
+]
+
+[[package]]
+name = "main"
+version = "0.1.0"
+dependencies = [
+ "bytemuck",
+ "cgmath",
+ "console_error_panic_hook",
+ "console_log",
+ "env_logger",
+ "image",
+ "log",
+ "naga",
+ "pollster",
+ "raw-window-handle 0.5.0",
+ "wasm-bindgen-futures",
+ "web-sys",
+ "wgpu",
+ "winit",
 ]
 
 [[package]]
@@ -1873,26 +1901,6 @@ dependencies = [
  "web-sys",
  "wgpu-types",
  "winapi",
-]
-
-[[package]]
-name = "wgpu-starter"
-version = "0.1.0"
-dependencies = [
- "bytemuck",
- "cgmath",
- "console_error_panic_hook",
- "console_log",
- "env_logger",
- "image",
- "log",
- "naga",
- "pollster",
- "raw-window-handle 0.5.0",
- "wasm-bindgen-futures",
- "web-sys",
- "wgpu",
- "winit",
 ]
 
 [[package]]

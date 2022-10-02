@@ -1,1 +1,6 @@
+/.vscode
+/.idea
+/.cargo
 /target
+/WEB/pkg
+*.wasm
