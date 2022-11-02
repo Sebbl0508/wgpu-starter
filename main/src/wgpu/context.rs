@@ -48,6 +48,7 @@ impl WgpuContext {
             width: size.width,
             height: size.height,
             present_mode: wgpu::PresentMode::AutoVsync,
+            alpha_mode: wgpu::CompositeAlphaMode::Auto,
         };
         surface.configure(&device, &surface_config);
 
