@@ -6,4 +6,4 @@ edition = "2021"
 
 [dependencies]
 cgmath = "0.18.0"
-bytemuck = { version = "1.12.2", features = ["derive"] }
+bytemuck = { version = "1.12.3", features = ["derive"] }
