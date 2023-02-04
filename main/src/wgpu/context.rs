@@ -18,7 +18,7 @@ impl WgpuContext {
         let size = window.inner_size();
 
         let instance = wgpu::Instance::new(wgpu::InstanceDescriptor {
-            backends: wgpu::Backends::PRIMARY,
+            backends: wgpu::Backends::all(),
             dx12_shader_compiler: Default::default(),
         });
 
