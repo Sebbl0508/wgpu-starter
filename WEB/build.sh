@@ -1,4 +1,8 @@
-#!/usr/bin/env bash
+#!/bin/sh
+
+set -xe
+
+cd $(dirname $0)
 
 cargo build --target wasm32-unknown-unknown --release --package main
 wasm-bindgen --out-dir pkg --web ../target/wasm32-unknown-unknown/release/main.wasm
