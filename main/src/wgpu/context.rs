@@ -6,6 +6,7 @@ pub struct WgpuContext {
     adapter: wgpu::Adapter,
     queue: wgpu::Queue,
     surface: wgpu::Surface,
+    surface_capabilities: wgpu::SurfaceCapabilities,
     surface_config: wgpu::SurfaceConfiguration,
     size: winit::dpi::PhysicalSize<u32>,
 
@@ -16,8 +17,12 @@ impl WgpuContext {
     pub async fn new(window: &Window) -> Result<Self, Box<dyn std::error::Error>> {
         let size = window.inner_size();
 
-        let instance = wgpu::Instance::new(wgpu::Backends::all());
-        let surface = unsafe { instance.create_surface(window) };
+        let instance = wgpu::Instance::new(wgpu::InstanceDescriptor {
+            backends: wgpu::Backends::PRIMARY,
+            dx12_shader_compiler: Default::default(),
+        });
+
+        let surface = unsafe { instance.create_surface(window) }?;
         let adapter = instance
             .request_adapter(&wgpu::RequestAdapterOptions {
                 power_preference: wgpu::PowerPreference::HighPerformance,
@@ -42,13 +47,23 @@ impl WgpuContext {
             )
             .await?;
 
+        let surface_capabilities = surface.get_capabilities(&adapter);
+        let surface_format = surface_capabilities
+            .formats
+            .iter()
+            .copied()
+            .filter(|f| f.describe().srgb)
+            .next()
+            .unwrap_or(surface_capabilities.formats[0]);
+
         let surface_config = wgpu::SurfaceConfiguration {
             usage: wgpu::TextureUsages::RENDER_ATTACHMENT,
-            format: surface.get_supported_formats(&adapter)[0],
+            format: surface_format,
             width: size.width,
             height: size.height,
             present_mode: wgpu::PresentMode::AutoVsync,
             alpha_mode: wgpu::CompositeAlphaMode::Auto,
+            view_formats: vec![],
         };
         surface.configure(&device, &surface_config);
 
@@ -64,6 +79,7 @@ impl WgpuContext {
             queue,
             surface,
             surface_config,
+            surface_capabilities,
             size,
             depth_texture,
         })
@@ -112,4 +128,3 @@ impl WgpuContext {
         }
     }
 }
-

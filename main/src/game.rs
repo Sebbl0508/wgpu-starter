@@ -1,11 +1,14 @@
-use winit::{window::Window, event_loop::{EventLoop, self, ControlFlow}, event::{Event, WindowEvent}};
 use crate::wgpu::context::WgpuContext;
-
+use winit::{
+    event::{Event, WindowEvent},
+    event_loop::{self, ControlFlow, EventLoop},
+    window::Window,
+};
 
 pub struct Game {
     ctx: WgpuContext,
     window: Window,
-    event_loop: Option<EventLoop<()>>
+    event_loop: Option<EventLoop<()>>,
 }
 
 impl Game {
@@ -33,9 +36,12 @@ impl Game {
             .texture
             .create_view(&wgpu::TextureViewDescriptor::default());
 
-        let mut encoder = self.ctx.device().create_command_encoder(&wgpu::CommandEncoderDescriptor {
-            label: Some("main command encoder"),
-        });
+        let mut encoder =
+            self.ctx
+                .device()
+                .create_command_encoder(&wgpu::CommandEncoderDescriptor {
+                    label: Some("main command encoder"),
+                });
 
         {
             let mut _rpass = encoder.begin_render_pass(&wgpu::RenderPassDescriptor {
@@ -51,7 +57,7 @@ impl Game {
                             a: 1.0,
                         }),
                         store: true,
-                    }
+                    },
                 })],
                 depth_stencil_attachment: Some(wgpu::RenderPassDepthStencilAttachment {
                     view: &self.ctx.depth_texture().view,
@@ -60,7 +66,7 @@ impl Game {
                         store: true,
                     }),
                     stencil_ops: None,
-                })
+                }),
             });
         }
 
